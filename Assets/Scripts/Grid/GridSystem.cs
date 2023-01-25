@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -64,7 +65,7 @@ public class GridSystem
             }
         }
     }
-
+      
     public void DisplayGridDebugObjects()
     {
         for (int x = 0; x < width; x++)
@@ -77,8 +78,6 @@ public class GridSystem
         }
         
     }
-
-
     public GridObject GetGridObject(GridPosition gridPosition)
     {
         return gridObjectArray[gridPosition.x, gridPosition.z];
@@ -105,5 +104,14 @@ public class GridSystem
         return gridObject.HasUnitAtGridPosition();
     }
 
+    public int GetWidth()
+    {
+        return width;
+    }
+
+    public int GetHeight()
+    {
+        return height;
+    }
 
 }

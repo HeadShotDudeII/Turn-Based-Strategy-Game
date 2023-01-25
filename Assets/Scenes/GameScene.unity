@@ -171,6 +171,52 @@ MonoBehaviour:
   unitLayer:
     serializedVersion: 2
     m_Bits: 128
+--- !u!1 &14194439
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 14194441}
+  - component: {fileID: 14194440}
+  m_Layer: 0
+  m_Name: GridSystemVisual
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &14194440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14194439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a03485ec212fee4f99ecd7a4649fff5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridVisualTransformPrefab: {fileID: 1597165032087637059, guid: efa0c143cde3b6540b180b23c0c14382,
+    type: 3}
+--- !u!4 &14194441
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14194439}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.9837222, y: 0.8436339, z: 4.001036}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &288504933
 GameObject:
   m_ObjectHideFlags: 0
@@ -887,7 +933,7 @@ PrefabInstance:
     - target: {fileID: 5341057854710532044, guid: 1c55503971f2c2b4cb8f29355e2ca632,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5341057854710532044, guid: 1c55503971f2c2b4cb8f29355e2ca632,
         type: 3}
@@ -897,7 +943,7 @@ PrefabInstance:
     - target: {fileID: 5341057854710532044, guid: 1c55503971f2c2b4cb8f29355e2ca632,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5341057854710532044, guid: 1c55503971f2c2b4cb8f29355e2ca632,
         type: 3}

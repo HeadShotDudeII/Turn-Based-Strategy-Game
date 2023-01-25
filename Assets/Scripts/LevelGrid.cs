@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -65,10 +66,14 @@ public class LevelGrid : MonoBehaviour
         RemoveUnitAtGridPosition(fromGridPosition,unit);
         AddUnitAtGridPosition(toGridPosition, unit);
     }
-
+        
     public bool IsValidGridPosition(GridPosition gridPosition) => gridSystem.IsValidGridPosition(gridPosition);
 
     public bool HasUnitAtGridPosition(GridPosition gridPosition) => gridSystem.HasUnitAtGridPosition(gridPosition);
+
+    public int GetHeight() => gridSystem.GetHeight();
+
+    public int GetWidth() => gridSystem.GetWidth();
 
 
 

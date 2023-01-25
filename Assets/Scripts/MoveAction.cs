@@ -51,7 +51,7 @@ public class MoveAction : MonoBehaviour
 
     }
 
-    public List<GridPosition> GetGridPositions()
+    public List<GridPosition> GetValidGridPositionsList()
     {
         List<GridPosition> validGridPositions = new List<GridPosition>();
         GridPosition unitGridPosition = unit.GetUnitGridPosition();
@@ -77,7 +77,7 @@ public class MoveAction : MonoBehaviour
 
     public bool IsValidGridPosition(GridPosition gridPosition)
     {
-        return GetGridPositions().Contains(gridPosition);
+        return GetValidGridPositionsList().Contains(gridPosition);
     }
 
 
