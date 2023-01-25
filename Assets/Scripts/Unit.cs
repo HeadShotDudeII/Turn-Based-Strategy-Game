@@ -4,19 +4,18 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    [SerializeField] Animator unitAnimator;
-    Vector3 targetPos;
+    
+  
     GridPosition gridPosition;
-    float smallDis = 0.1f;
-    [SerializeField] private float moveSpeed = 1.5f;
-    [SerializeField] private float rotateSpeed = 10f;
+    MoveAction moveAction;
+    
 
 
     private void Awake()
     {
         //Debug.Log(targetPos); 
         // targetPos is initialized to 000 if unit is set to others it will update its position in update method.
-        this.targetPos = transform.position;
+        moveAction = GetComponent<MoveAction>();
         //so the unit will stay where it was set instead of going to 000
     }
 
@@ -31,7 +30,7 @@ public class Unit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Move();
+        
         UpdateGridPosition();
 
     }
@@ -48,29 +47,16 @@ public class Unit : MonoBehaviour
         }
     }
 
-    private void Move()
+    public MoveAction GetMoveAction()
     {
-        if (Vector3.Distance(transform.position, targetPos) > smallDis)
-        {
-            Vector3 unitDirection = (targetPos - transform.position).normalized;
-            //Direction and normalized distance
-            transform.position += unitDirection * moveSpeed * Time.deltaTime;
-            transform.forward = Vector3.Lerp(transform.forward, unitDirection, Time.deltaTime * rotateSpeed);
-            //notice this lerp is not linear since transform.forward is chaning if linear is needed it need to be stored every change in direction.
-            unitAnimator.SetBool("IsWalking", true);
-        }
-        else
-        {
-            unitAnimator.SetBool("IsWalking", false);
-
-        }
+        return moveAction;
     }
 
-    public void UpdateTargetPos(Vector3 targetPos)
+    public GridPosition GetUnitGridPosition()
     {
-        this.targetPos = targetPos;
-      
-
+        return gridPosition;
     }
+
+   
 
 }

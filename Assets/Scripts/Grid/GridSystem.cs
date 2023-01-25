@@ -45,6 +45,11 @@ public class GridSystem
             Mathf.RoundToInt(position.z / cellSize));
     }
 
+    public Vector3 GetWorldPositionFromGridPosition(GridPosition gridPosition)
+    {
+        return new Vector3(gridPosition.x * cellSize, gridPosition.z * cellSize);
+    }
+
     public void CreateDebugObjects(Transform debugPrefabs)
     {
         for (int x = 0; x < width; x++)
@@ -83,6 +88,21 @@ public class GridSystem
     {
         return gridObject.gridPosition;
 
+    }
+
+    public bool IsValidGridPosition(GridPosition gridPosition)
+    {
+        return
+                gridPosition.x >= 0 &&
+                gridPosition.z >= 0 &&
+                gridPosition.x < width &&
+                gridPosition.z < height;
+    }
+
+    public bool HasUnitAtGridPosition(GridPosition gridPosition)
+    {
+        GridObject gridObject = GetGridObject(gridPosition);
+        return gridObject.HasUnitAtGridPosition();
     }
 
 

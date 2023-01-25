@@ -43,6 +43,11 @@ public class GridObject
         return unitList;
     }
 
+    public bool HasUnitAtGridPosition()
+    {
+        return unitList.Count > 0;
+    }
+
    
 
     

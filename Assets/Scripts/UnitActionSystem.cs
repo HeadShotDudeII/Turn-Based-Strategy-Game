@@ -27,9 +27,16 @@ public class UnitActionSystem : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             //select unit and publish selected event, but will not make unit move.
-            if (TryHandleUnitSelection()) return; 
+            if (TryHandleUnitSelection()) return;
             // Set Target Position, then unit will execute Move()
-            unitSelected.UpdateTargetPos(MousePos.GetMousePosition());
+           
+            GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPositionFromWorldPos(MousePos.GetMousePosition());
+            Debug.Log("mouse position" + mouseGridPosition);
+            if (unitSelected.GetMoveAction().IsValidGridPosition(mouseGridPosition))
+            {
+                Debug.Log("inside check mouseposition");
+                unitSelected.GetMoveAction().UpdateTargetPos(mouseGridPosition);
+            }
             
         }
     }
