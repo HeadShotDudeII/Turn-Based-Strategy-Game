@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class UnitActionSystem : MonoBehaviour
 {
-    public static UnitActionSystem Instance { get; private set; }
-    public event EventHandler OnSelectedUnitChanged;
-    // Start is called before the first frame update
     [SerializeField] Unit unitSelected;
     [SerializeField] LayerMask unitLayer;
+    public static UnitActionSystem Instance { get; private set; }
+    public event EventHandler OnSelectedUnitChanged;
+    public bool isBusy;    
 
     private void Awake()
     {
@@ -24,6 +24,7 @@ public class UnitActionSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isBusy) return;
         if (Input.GetMouseButton(0))
         {
             //select unit and publish selected event, but will not make unit move.
@@ -34,10 +35,16 @@ public class UnitActionSystem : MonoBehaviour
             Debug.Log("mouse position" + mouseGridPosition);
             if (unitSelected.GetMoveAction().IsValidGridPosition(mouseGridPosition))
             {
+                SetBusy();
                 Debug.Log("inside check mouseposition");
-                unitSelected.GetMoveAction().UpdateTargetPos(mouseGridPosition);
+                unitSelected.GetMoveAction().UpdateTargetPos(mouseGridPosition, ClearBusy);
             }
             
+        }
+        if (Input.GetMouseButton(1))
+        {
+            SetBusy();
+            unitSelected.GetSpinAction().SpinStart(ClearBusy);
         }
     }
 
@@ -71,5 +78,15 @@ public class UnitActionSystem : MonoBehaviour
     public Unit GetSelectedUnit()
     {
         return unitSelected;
+    }
+
+    public void SetBusy()
+    {
+        isBusy = true;
+    }
+
+    public void ClearBusy()
+    {
+        isBusy = false;
     }
 }

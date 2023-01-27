@@ -8,6 +8,7 @@ public class Unit : MonoBehaviour
   
     GridPosition gridPosition;
     MoveAction moveAction;
+    SpinAction spinAction;
     
 
 
@@ -16,6 +17,7 @@ public class Unit : MonoBehaviour
         //Debug.Log(targetPos); 
         // targetPos is initialized to 000 if unit is set to others it will update its position in update method.
         moveAction = GetComponent<MoveAction>();
+        spinAction = GetComponent<SpinAction>();
         //so the unit will stay where it was set instead of going to 000
     }
 
@@ -50,6 +52,11 @@ public class Unit : MonoBehaviour
     public MoveAction GetMoveAction()
     {
         return moveAction;
+    }
+
+    public SpinAction GetSpinAction()
+    {
+        return spinAction;
     }
 
     public GridPosition GetUnitGridPosition()
