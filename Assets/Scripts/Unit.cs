@@ -1,15 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    
-  
+
+
     GridPosition gridPosition;
     MoveAction moveAction;
     SpinAction spinAction;
-    
+    BaseAction[] baseActionArray;
+
 
 
     private void Awake()
@@ -18,6 +17,7 @@ public class Unit : MonoBehaviour
         // targetPos is initialized to 000 if unit is set to others it will update its position in update method.
         moveAction = GetComponent<MoveAction>();
         spinAction = GetComponent<SpinAction>();
+        baseActionArray = GetBaseActions();
         //so the unit will stay where it was set instead of going to 000
     }
 
@@ -26,13 +26,13 @@ public class Unit : MonoBehaviour
     {
         gridPosition = LevelGrid.Instance.GetGridPositionFromWorldPos(transform.position);
         LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
-               
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
         UpdateGridPosition();
 
     }
@@ -64,6 +64,11 @@ public class Unit : MonoBehaviour
         return gridPosition;
     }
 
-   
+    public BaseAction[] GetBaseActions()
+    {
+        return GetComponents<BaseAction>();
+    }
+
+
 
 }

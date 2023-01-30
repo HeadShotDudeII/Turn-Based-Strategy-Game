@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +9,7 @@ public class MoveAction : BaseAction
     [SerializeField] private float moveSpeed = 1.5f;
     [SerializeField] private float rotateSpeed = 10f;
     [SerializeField] int max_Move_Dis = 1;
-    
+
     Vector3 targetPos;
     GridPosition unitGridPosition;
 
@@ -18,9 +17,9 @@ public class MoveAction : BaseAction
     {
         base.Awake();
         targetPos = transform.position;
-        
+
     }
-  
+
     void Update()
     {
         if (!isActive) return;
@@ -29,7 +28,7 @@ public class MoveAction : BaseAction
 
     private void Move()
     {
-        
+
         Vector3 unitDirection = (targetPos - transform.position).normalized;
 
         if (Vector3.Distance(transform.position, targetPos) > smallDis)
@@ -41,9 +40,9 @@ public class MoveAction : BaseAction
         }
         else
         {
-            isActive = false; 
+            isActive = false;
             unitAnimator.SetBool("IsWalking", false);
-            onActionComplete(); 
+            onActionComplete();
 
         }
         transform.forward = Vector3.Lerp(transform.forward, unitDirection, Time.deltaTime * rotateSpeed);
@@ -65,7 +64,7 @@ public class MoveAction : BaseAction
         GridPosition unitGridPosition = unit.GetUnitGridPosition();
         for (int x = -max_Move_Dis; x <= max_Move_Dis; x++)
         {
-            for(int z = -max_Move_Dis; z<= max_Move_Dis; z++)
+            for (int z = -max_Move_Dis; z <= max_Move_Dis; z++)
             {
                 GridPosition offsetGridPosition = new GridPosition(x, z);
                 GridPosition testGridPosition = offsetGridPosition + unitGridPosition;
@@ -88,6 +87,10 @@ public class MoveAction : BaseAction
         return GetValidGridPositionsList().Contains(gridPosition);
     }
 
+    public override string GetActionName()
+    {
+        return "Move";
+    }
 
 
 }

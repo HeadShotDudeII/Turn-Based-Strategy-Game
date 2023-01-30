@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class BaseAction : MonoBehaviour
@@ -11,13 +9,9 @@ public abstract class BaseAction : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Awake()
     {
-        unit = GetComponent<Unit>();       
+        unit = GetComponent<Unit>();
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public abstract string GetActionName();
 }
