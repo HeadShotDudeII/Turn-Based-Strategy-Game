@@ -69,6 +69,8 @@ public class Unit : MonoBehaviour
         return GetComponents<BaseAction>();
     }
 
-
-
+    public BaseAction GetDefaultAction()
+    {
+        return baseActionArray[0];
+    }
 }

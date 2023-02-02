@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UnitActionSystem : MonoBehaviour
@@ -9,7 +7,10 @@ public class UnitActionSystem : MonoBehaviour
     [SerializeField] LayerMask unitLayer;
     public static UnitActionSystem Instance { get; private set; }
     public event EventHandler OnSelectedUnitChanged;
-    public bool isBusy;    
+    public event EventHandler OnSelectedActionChanged;
+    public BaseAction selectedBaseAction;
+
+    public bool isBusy;
 
     private void Awake()
     {
@@ -21,6 +22,13 @@ public class UnitActionSystem : MonoBehaviour
         Instance = this;
     }
 
+
+    private void Start()
+    {
+        SetSelectedUnit(unitSelected);
+    }
+
+
     // Update is called once per frame
     void Update()
     {
@@ -30,16 +38,14 @@ public class UnitActionSystem : MonoBehaviour
             //select unit and publish selected event, but will not make unit move.
             if (TryHandleUnitSelection()) return;
             // Set Target Position, then unit will execute Move()
-           
+
             GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPositionFromWorldPos(MousePos.GetMousePosition());
-            Debug.Log("mouse position" + mouseGridPosition);
             if (unitSelected.GetMoveAction().IsValidGridPosition(mouseGridPosition))
             {
                 SetBusy();
-                Debug.Log("inside check mouseposition");
                 unitSelected.GetMoveAction().UpdateTargetPos(mouseGridPosition, ClearBusy);
             }
-            
+
         }
         if (Input.GetMouseButton(1))
         {
@@ -64,21 +70,31 @@ public class UnitActionSystem : MonoBehaviour
 
     }
 
-    private void SetSelectedUnit(Unit unit)
+    public void SetSelectedUnit(Unit unit)
     {
         unitSelected = unit;
-        //OnSelectedUnitChanged?.Invoke(this, EventArgs.Empty);  
-        //same as below.
-        if (OnSelectedUnitChanged != null) //if there is subscriber
-        {
-            OnSelectedUnitChanged(this, EventArgs.Empty); //invoke event
-        }
+        OnSelectedUnitChanged?.Invoke(this, EventArgs.Empty);
+        SetSelectedAction(unit.GetDefaultAction());
+
+
+    }
+
+    public void SetSelectedAction(BaseAction baseAction)
+    {
+        selectedBaseAction = baseAction;
+        OnSelectedActionChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public Unit GetSelectedUnit()
     {
         return unitSelected;
     }
+
+    public BaseAction GetSelectedAction()
+    {
+        return selectedBaseAction;
+    }
+
 
     public void SetBusy()
     {

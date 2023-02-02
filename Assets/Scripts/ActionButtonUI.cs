@@ -1,22 +1,24 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ActionButtonUI : MonoBehaviour
 {
+    BaseAction baseAction;
     [SerializeField] TextMeshProUGUI buttonText;
-    void Start()
+    [SerializeField] GameObject selectedVisual;
+    [SerializeField] Button button;
+
+    public void SetBaseAction(BaseAction baseAction)
     {
-        buttonText = GetComponent<TextMeshProUGUI>();
+        this.baseAction = baseAction;
+        buttonText.text = baseAction.GetActionName();
+        button.onClick.AddListener(() => { UnitActionSystem.Instance.SetSelectedAction(baseAction); });
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateButtonVisual(BaseAction selectedAction)
     {
-
-    }
-
-    public void SetBaseAction(BaseAction action)
-    {
-        buttonText.text = action.GetActionName();
+        selectedVisual.SetActive(baseAction == selectedAction);
     }
 }
