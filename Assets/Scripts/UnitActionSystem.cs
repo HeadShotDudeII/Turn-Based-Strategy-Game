@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class UnitActionSystem : MonoBehaviour
 {
@@ -33,42 +34,52 @@ public class UnitActionSystem : MonoBehaviour
     void Update()
     {
         if (isBusy) return;
-        if (Input.GetMouseButton(0))
-        {
-            //select unit and publish selected event, but will not make unit move.
-            if (TryHandleUnitSelection()) return;
-            // Set Target Position, then unit will execute Move()
 
-            GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPositionFromWorldPos(MousePos.GetMousePosition());
-            if (unitSelected.GetMoveAction().IsValidGridPosition(mouseGridPosition))
-            {
-                SetBusy();
-                unitSelected.GetMoveAction().UpdateTargetPos(mouseGridPosition, ClearBusy);
-            }
+        if (EventSystem.current.IsPointerOverGameObject()) return;
 
-        }
-        if (Input.GetMouseButton(1))
-        {
-            SetBusy();
-            unitSelected.GetSpinAction().SpinStart(ClearBusy);
-        }
+        if (TryHandleUnitSelection()) return;
+
+        HandleBaseAction();
     }
 
     bool TryHandleUnitSelection()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, unitLayer))
+        if (Input.GetMouseButton(0))
         {
-            if (raycastHit.transform.TryGetComponent<Unit>(out Unit unit))
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, unitLayer))
             {
-                SetSelectedUnit(unit);
-                //Debug.Log(unit.name);
-                return true;
+                if (raycastHit.transform.TryGetComponent<Unit>(out Unit unit))
+                {
+                    SetSelectedUnit(unit);
+                    //Debug.Log(unit.name);
+                    return true;
+                }
             }
         }
         return false;
 
     }
+
+    void HandleBaseAction()
+    {
+        if (Input.GetMouseButton(0))
+        {
+
+
+            GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPositionFromWorldPos(MousePos.GetMousePosition());
+
+            if (selectedBaseAction.IsValidGridPosition(mouseGridPosition))
+            {
+                SetBusy();
+                selectedBaseAction.TakeAction(mouseGridPosition, ClearBusy);
+            }
+
+        }
+
+
+    }
+
 
     public void SetSelectedUnit(Unit unit)
     {

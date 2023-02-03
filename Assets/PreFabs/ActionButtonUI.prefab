@@ -379,6 +379,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e54fe5a5464ae9f4cb6f98583fe3cc7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonText: {fileID: 4615498288447619477}
-  selectedVisual: {fileID: 3870989760036562525}
+  buttonTextUI: {fileID: 4615498288447619477}
   button: {fileID: 3633797992070327152}
+  buttonVisual: {fileID: 3870989760036562525}

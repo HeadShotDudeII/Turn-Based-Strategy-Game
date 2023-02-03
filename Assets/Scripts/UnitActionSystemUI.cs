@@ -7,72 +7,67 @@ public class UnitActionSystemUI : MonoBehaviour
     [SerializeField] Transform buttonContainer;
     [SerializeField] Transform buttonPrefab;
 
-
+    List<ActionButtonUI> buttonList;
+    BaseAction selectedBaseAction;
     Unit selectedUnit;
-    BaseAction selectedAction;
-    ActionButtonUI actionButtonUI;
-    List<ActionButtonUI> actionButtonUIList;
 
     private void Awake()
     {
-        actionButtonUIList = new List<ActionButtonUI>();
+        buttonList = new List<ActionButtonUI>();
     }
-
-
     private void Start()
     {
-        UnitActionSystem.Instance.OnSelectedUnitChanged += UnitActionSystem_OnSelectedUnitChanged;
+
         UnitActionSystem.Instance.OnSelectedActionChanged += UnitActionSystem_OnSelectedActionChanged;
+        UnitActionSystem.Instance.OnSelectedUnitChanged += UnitActionSystem_OnSelectedUnitChanged;
 
 
-        CreateActionButtons();
+        CreateSelectedUnitButtons();
         UpdateButtonsVisual();
 
 
     }
 
-    private void CreateActionButtons()
+    private void CreateSelectedUnitButtons()
     {
         selectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
 
-
-        foreach (Transform buttonSlot in buttonContainer)
+        foreach (Transform buttonHolder in buttonContainer)
         {
-            Destroy(buttonSlot.gameObject);
+            Destroy(buttonHolder.gameObject);
         }
 
-        actionButtonUIList.Clear();
+        buttonList.Clear();
 
-        foreach (BaseAction baseAction in selectedUnit.GetBaseActions())
+        BaseAction[] baseActions = selectedUnit.GetBaseActions();
+
+        foreach (BaseAction baseAction in baseActions)
         {
             Transform buttonUI = Instantiate(buttonPrefab, buttonContainer);
-            actionButtonUI = buttonUI.GetComponent<ActionButtonUI>();
-            actionButtonUI.SetBaseAction(baseAction);
-            actionButtonUIList.Add(actionButtonUI);
+            ActionButtonUI actionButton = buttonUI.GetComponent<ActionButtonUI>();
+            actionButton.SetBaseAction(baseAction);
+            buttonList.Add(actionButton);
         }
-
 
 
     }
-
 
     private void UpdateButtonsVisual()
     {
-        selectedAction = UnitActionSystem.Instance.GetSelectedAction();
-        foreach (ActionButtonUI actionButton in actionButtonUIList)
+        selectedBaseAction = UnitActionSystem.Instance.GetSelectedAction();
+        foreach (ActionButtonUI actionButton in buttonList)
         {
-            actionButton.UpdateButtonVisual(selectedAction);
+            actionButton.UpdateButtonUI(selectedBaseAction);
         }
     }
 
-    private void UnitActionSystem_OnSelectedUnitChanged(object sender, EventArgs e)
+    void UnitActionSystem_OnSelectedUnitChanged(object Sender, EventArgs e)
     {
-        CreateActionButtons();
+        CreateSelectedUnitButtons();
     }
 
-    private void UnitActionSystem_OnSelectedActionChanged(object sender, EventArgs e)
+    void UnitActionSystem_OnSelectedActionChanged(object Sender, EventArgs e)
     {
         UpdateButtonsVisual();
     }
-
 }

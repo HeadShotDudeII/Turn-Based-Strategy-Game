@@ -4,21 +4,21 @@ using UnityEngine.UI;
 
 public class ActionButtonUI : MonoBehaviour
 {
-    BaseAction baseAction;
-    [SerializeField] TextMeshProUGUI buttonText;
-    [SerializeField] GameObject selectedVisual;
+    [SerializeField] TextMeshProUGUI buttonTextUI;
     [SerializeField] Button button;
+    [SerializeField] GameObject buttonVisual;
 
+    BaseAction baseAction;
     public void SetBaseAction(BaseAction baseAction)
     {
         this.baseAction = baseAction;
-        buttonText.text = baseAction.GetActionName();
+        buttonTextUI.text = baseAction.GetActionName();
         button.onClick.AddListener(() => { UnitActionSystem.Instance.SetSelectedAction(baseAction); });
 
     }
 
-    public void UpdateButtonVisual(BaseAction selectedAction)
+    public void UpdateButtonUI(BaseAction selectedBaseAction)
     {
-        selectedVisual.SetActive(baseAction == selectedAction);
+        buttonVisual.SetActive(baseAction == selectedBaseAction);
     }
 }

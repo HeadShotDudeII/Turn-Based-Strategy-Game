@@ -49,7 +49,7 @@ public class MoveAction : BaseAction
 
     }
 
-    public void UpdateTargetPos(GridPosition gridPosition, Action onMoveActionComplete)
+    public override void TakeAction(GridPosition gridPosition, Action onMoveActionComplete)
     {
         isActive = true;
         onActionComplete = onMoveActionComplete;
@@ -58,7 +58,7 @@ public class MoveAction : BaseAction
 
     }
 
-    public List<GridPosition> GetValidGridPositionsList()
+    public override List<GridPosition> GetValidGridPositionsList()
     {
         List<GridPosition> validGridPositions = new List<GridPosition>();
         GridPosition unitGridPosition = unit.GetUnitGridPosition();
@@ -82,10 +82,7 @@ public class MoveAction : BaseAction
     }
 
 
-    public bool IsValidGridPosition(GridPosition gridPosition)
-    {
-        return GetValidGridPositionsList().Contains(gridPosition);
-    }
+
 
     public override string GetActionName()
     {
