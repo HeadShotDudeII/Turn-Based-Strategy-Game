@@ -9,6 +9,8 @@ public class UnitActionSystem : MonoBehaviour
     public static UnitActionSystem Instance { get; private set; }
     public event EventHandler OnSelectedUnitChanged;
     public event EventHandler OnSelectedActionChanged;
+    public event EventHandler<bool> OnBusyChanged;
+
     public BaseAction selectedBaseAction;
 
     public bool isBusy;
@@ -110,10 +112,13 @@ public class UnitActionSystem : MonoBehaviour
     public void SetBusy()
     {
         isBusy = true;
+        OnBusyChanged?.Invoke(this, isBusy);
+
     }
 
     public void ClearBusy()
     {
         isBusy = false;
+        OnBusyChanged?.Invoke(this, isBusy);
     }
 }
