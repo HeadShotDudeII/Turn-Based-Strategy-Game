@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Unit : MonoBehaviour
@@ -8,6 +9,13 @@ public class Unit : MonoBehaviour
     MoveAction moveAction;
     SpinAction spinAction;
     BaseAction[] baseActionArray;
+    [SerializeField] int actionPoints = 3;
+    [SerializeField] bool isEnemy;
+    public const int MAX_DEFAULT_ACTION_POINTS = 3;
+    BaseAction selectedBaseAction;
+    public static event EventHandler OnAnyActionPointsChanged;
+
+
 
 
 
@@ -18,6 +26,7 @@ public class Unit : MonoBehaviour
         moveAction = GetComponent<MoveAction>();
         spinAction = GetComponent<SpinAction>();
         baseActionArray = GetBaseActions();
+        selectedBaseAction = GetDefaultAction();
         //so the unit will stay where it was set instead of going to 000
     }
 
@@ -26,6 +35,7 @@ public class Unit : MonoBehaviour
     {
         gridPosition = LevelGrid.Instance.GetGridPositionFromWorldPos(transform.position);
         LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
+        TurnSystem.Instance.OnTurnChanged += TurnSystem_OnTurnChanged;
 
     }
 
@@ -72,5 +82,56 @@ public class Unit : MonoBehaviour
     public BaseAction GetDefaultAction()
     {
         return baseActionArray[0];
+    }
+
+    public bool TryTakeActionAndSpendActionPoints(BaseAction baseAction)
+    {
+        if (actionPoints < baseAction.GetActionPoints())
+            return false;
+        else
+        {
+            actionPoints -= baseAction.GetActionPoints();
+            OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
+            return true;
+        }
+    }
+
+    public int GetActionPoints()
+    {
+        return actionPoints;
+    }
+
+    public BaseAction GetSelectedBaseAction()
+    {
+        return selectedBaseAction;
+    }
+
+    public void SetSelectedBaseAction(BaseAction selectedBaseAction)
+    {
+        this.selectedBaseAction = selectedBaseAction;
+    }
+
+    public void TurnSystem_OnTurnChanged(object sendern, EventArgs e)
+    {
+        ResetActionPoints();
+    }
+
+    public void ResetActionPoints()
+    {   // when isEnemy is true, and it's Enemy's turn dont update 
+        // when isEnemy is false ?? 
+        if ((IsEnemy() && !TurnSystem.Instance.IsPlayerTurn())
+            || (!IsEnemy() && TurnSystem.Instance.IsPlayerTurn()))
+        {
+            actionPoints = MAX_DEFAULT_ACTION_POINTS;
+            OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
+            // this is a static event will cause all instance to 
+            // fire a event and all instance will execute what ever
+            // code that listen to this event.
+        }
+    }
+
+    public bool IsEnemy()
+    {
+        return isEnemy;
     }
 }

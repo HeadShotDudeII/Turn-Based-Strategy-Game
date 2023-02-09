@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,12 +12,13 @@ public class GridSystemVisual : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null) {
+        if (Instance != null)
+        {
             Destroy(gameObject);
         }
 
         Instance = this;
-        
+
     }
 
     void Start()
@@ -31,7 +30,7 @@ public class GridSystemVisual : MonoBehaviour
         CreateGridVisual();
     }
 
-    
+
 
     // Update is called once per frame
     void Update()
@@ -42,14 +41,14 @@ public class GridSystemVisual : MonoBehaviour
 
     private void CreateGridVisual()
     {
-        
 
-        for(int x = 0; x<width; x++)
+
+        for (int x = 0; x < width; x++)
         {
-            for(int z = 0; z< height; z++)
+            for (int z = 0; z < height; z++)
             {
                 GridPosition gridPosition = new GridPosition(x, z);
-                Transform gridSystemVisualSingle = 
+                Transform gridSystemVisualSingle =
                        Instantiate(gridVisualTransformPrefab, LevelGrid.Instance.GetWorldPositionFromGridPos(gridPosition), Quaternion.identity);
                 gridSystemVisualSingleArray[x, z] = gridSystemVisualSingle.GetComponent<GridSystemVisualSingle>();
             }
@@ -70,7 +69,7 @@ public class GridSystemVisual : MonoBehaviour
 
     public void ShowGridVisual(List<GridPosition> gridPositions)
     {
-        foreach(GridPosition gridPosition in gridPositions)
+        foreach (GridPosition gridPosition in gridPositions)
         {
             gridSystemVisualSingleArray[gridPosition.x, gridPosition.z].ShowVisual();
         }
@@ -81,7 +80,7 @@ public class GridSystemVisual : MonoBehaviour
     {
         HideGridVisual();
         Unit unitSelected = UnitActionSystem.Instance.GetSelectedUnit();
-        ShowGridVisual(unitSelected.GetMoveAction().GetValidGridPositionsList());
+        ShowGridVisual(unitSelected.GetSelectedBaseAction().GetValidGridPositionsList());
 
     }
 

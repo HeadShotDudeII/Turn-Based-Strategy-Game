@@ -4,14 +4,15 @@ using UnityEngine.EventSystems;
 
 public class UnitActionSystem : MonoBehaviour
 {
-    [SerializeField] Unit unitSelected;
+    [SerializeField] Unit selectedUnit;
+    [SerializeField] BaseAction selectedBaseAction;
     [SerializeField] LayerMask unitLayer;
     public static UnitActionSystem Instance { get; private set; }
     public event EventHandler OnSelectedUnitChanged;
     public event EventHandler OnSelectedActionChanged;
     public event EventHandler<bool> OnBusyChanged;
+    public event EventHandler OnActionTook;
 
-    public BaseAction selectedBaseAction;
 
     public bool isBusy;
 
@@ -28,7 +29,7 @@ public class UnitActionSystem : MonoBehaviour
 
     private void Start()
     {
-        SetSelectedUnit(unitSelected);
+        SetSelectedUnit(selectedUnit);
     }
 
 
@@ -36,6 +37,8 @@ public class UnitActionSystem : MonoBehaviour
     void Update()
     {
         if (isBusy) return;
+
+        if (!TurnSystem.Instance.IsPlayerTurn()) return;
 
         if (EventSystem.current.IsPointerOverGameObject()) return;
 
@@ -53,8 +56,13 @@ public class UnitActionSystem : MonoBehaviour
             {
                 if (raycastHit.transform.TryGetComponent<Unit>(out Unit unit))
                 {
+
+                    if (unit == selectedUnit) return false;
+
+                    if (unit.IsEnemy()) return false;
+
+
                     SetSelectedUnit(unit);
-                    //Debug.Log(unit.name);
                     return true;
                 }
             }
@@ -71,11 +79,13 @@ public class UnitActionSystem : MonoBehaviour
 
             GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPositionFromWorldPos(MousePos.GetMousePosition());
 
-            if (selectedBaseAction.IsValidGridPosition(mouseGridPosition))
-            {
-                SetBusy();
-                selectedBaseAction.TakeAction(mouseGridPosition, ClearBusy);
-            }
+            if (!selectedBaseAction.IsValidGridPosition(mouseGridPosition)) return;
+
+            if (!selectedUnit.TryTakeActionAndSpendActionPoints(selectedBaseAction)) return;
+
+            SetBusy();
+            selectedBaseAction.TakeAction(mouseGridPosition, ClearBusy);
+            OnActionTook?.Invoke(this, EventArgs.Empty);
 
         }
 
@@ -85,9 +95,18 @@ public class UnitActionSystem : MonoBehaviour
 
     public void SetSelectedUnit(Unit unit)
     {
-        unitSelected = unit;
+        selectedUnit = unit;
         OnSelectedUnitChanged?.Invoke(this, EventArgs.Empty);
-        SetSelectedAction(unit.GetDefaultAction());
+
+        if (selectedBaseAction != null)
+            selectedBaseAction = selectedUnit.GetSelectedBaseAction();
+        else
+            selectedBaseAction = selectedUnit.GetDefaultAction();
+
+        SetSelectedAction(selectedBaseAction);
+
+
+
 
 
     }
@@ -95,12 +114,13 @@ public class UnitActionSystem : MonoBehaviour
     public void SetSelectedAction(BaseAction baseAction)
     {
         selectedBaseAction = baseAction;
+        selectedUnit.SetSelectedBaseAction(baseAction);
         OnSelectedActionChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public Unit GetSelectedUnit()
     {
-        return unitSelected;
+        return selectedUnit;
     }
 
     public BaseAction GetSelectedAction()

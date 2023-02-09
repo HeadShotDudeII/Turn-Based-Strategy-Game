@@ -7,6 +7,7 @@ public abstract class BaseAction : MonoBehaviour
     protected Unit unit;
     protected Action onActionComplete;
     protected bool isActive; // true on, false off
+    int defaultActionPoint = 1;
     // Start is called before the first frame update
     protected virtual void Awake()
     {
@@ -25,4 +26,9 @@ public abstract class BaseAction : MonoBehaviour
     public abstract void TakeAction(GridPosition gridPosition, Action onActionComplete);
 
     public abstract string GetActionName();
+
+    public virtual int GetActionPoints()
+    {
+        return defaultActionPoint;
+    }
 }

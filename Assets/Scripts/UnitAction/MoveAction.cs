@@ -12,6 +12,7 @@ public class MoveAction : BaseAction
 
     Vector3 targetPos;
     GridPosition unitGridPosition;
+    int moveActionPoint = 1;
 
     protected override void Awake()
     {
@@ -87,6 +88,11 @@ public class MoveAction : BaseAction
     public override string GetActionName()
     {
         return "Move";
+    }
+
+    public override int GetActionPoints()
+    {
+        return moveActionPoint;
     }
 
 

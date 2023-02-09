@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpinAction : BaseAction
 {
     float totalSpinAmount;
+    int spinActionPoint = 2;
 
     // Update is called once per frame
     void Update()
@@ -46,4 +47,10 @@ public class SpinAction : BaseAction
     {
         return new List<GridPosition> { UnitActionSystem.Instance.GetSelectedUnit().GetUnitGridPosition() };
     }
+
+    public override int GetActionPoints()
+    {
+        return spinActionPoint;
+    }
+
 }
