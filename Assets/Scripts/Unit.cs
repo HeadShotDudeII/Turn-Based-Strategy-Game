@@ -30,6 +30,10 @@ public class Unit : MonoBehaviour
         //so the unit will stay where it was set instead of going to 000
     }
 
+    public Vector3 GetWorldPosition()
+    {
+        return transform.position;
+    }
 
     private void Start()
     {
@@ -57,6 +61,11 @@ public class Unit : MonoBehaviour
             gridPosition = newGridPosition;
             // Debug.Log("grid position changed");
         }
+    }
+
+    internal void Damage()
+    {
+        Debug.Log(transform + " is damaged");
     }
 
     public MoveAction GetMoveAction()

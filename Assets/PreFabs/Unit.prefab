@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1255391846442628266
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 846914056789980074}
+  m_Layer: 7
+  m_Name: ShootPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &846914056789980074
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1255391846442628266}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0.0863, z: 0.74}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5336577643129910782}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5339065360366216082
 GameObject:
   m_ObjectHideFlags: 0
@@ -2408,6 +2439,7 @@ Transform:
   - {fileID: 5336529292826881478}
   - {fileID: 5336294502964527072}
   - {fileID: 5336967774116279662}
+  - {fileID: 846914056789980074}
   m_Father: {fileID: 5337309316946636262}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 4.15, y: 52.3, z: -128.2}
@@ -2794,6 +2826,8 @@ GameObject:
   - component: {fileID: 2016830269358254408}
   - component: {fileID: 7988405486733571374}
   - component: {fileID: 7189175730842788029}
+  - component: {fileID: -2899672337685060568}
+  - component: {fileID: 5480025876875432614}
   m_Layer: 7
   m_Name: Unit
   m_TagString: Untagged
@@ -2830,6 +2864,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c17c1ad16b117c5409e35b423aa2feb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionPoints: 3
+  isEnemy: 0
 --- !u!65 &2016830269358254408
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2856,9 +2892,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitAnimator: {fileID: 5425555585083878324}
-  moveSpeed: 1.5
-  rotateSpeed: 10
-  max_Move_Dis: 1
+  moveSpeed: 5
+  rotateSpeed: 30
+  max_Move_Dis: 3
 --- !u!114 &7189175730842788029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2871,6 +2907,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b06af42d16e87241a09b4616087440a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-2899672337685060568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5341057854710532047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f09a3358ce4a1894f8caa09f07f110e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  max_Shoot_Dis: 7
+--- !u!114 &5480025876875432614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5341057854710532047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9d06d3dab9a02142b9a24b45e66607a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 5425555585083878324}
+  bulletProjectilePrefab: {fileID: 2839081078793989240, guid: 6468aa256f06cde4da3ad6a4ef1a99cd,
+    type: 3}
+  shootPointTransform: {fileID: 846914056789980074}
 --- !u!1 &5800906428284300060
 GameObject:
   m_ObjectHideFlags: 0

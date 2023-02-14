@@ -15,10 +15,10 @@ public class SpinAction : BaseAction
 
     }
 
-    public override void TakeAction(GridPosition gridPosition, Action onSpinActionComplete)
+    public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
         isActive = true;
-        onActionComplete = onSpinActionComplete;
+        this.onActionComplete = onActionComplete;
         //Debug.Log("totalSpinAmount " + totalSpinAmount);
         totalSpinAmount = 0f;
     }

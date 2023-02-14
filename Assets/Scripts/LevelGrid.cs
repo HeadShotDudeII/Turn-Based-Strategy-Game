@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -33,20 +31,20 @@ public class LevelGrid : MonoBehaviour
         gridSystem.DisplayGridDebugObjects();
     }
 
-    public void AddUnitAtGridPosition(GridPosition gridPosition, Unit unit) 
+    public void AddUnitAtGridPosition(GridPosition gridPosition, Unit unit)
     {
         GridObject gridObject = gridSystem.GetGridObject(gridPosition);
         gridObject.AddUnit(unit);
-        
+
     }
 
-    public List<Unit> GetUnitListAtGridPosition(GridPosition gridPosition, Unit unit) 
+    public List<Unit> GetUnitListAtGridPosition(GridPosition gridPosition, Unit unit)
     {
         GridObject gridObject = gridSystem.GetGridObject(gridPosition);
         return gridObject.GetUnitList();
     }
 
-    public void RemoveUnitAtGridPosition(GridPosition gridPosition,Unit unit) 
+    public void RemoveUnitAtGridPosition(GridPosition gridPosition, Unit unit)
     {
         GridObject gridObject = gridSystem.GetGridObject(gridPosition);
         gridObject.RemoveUnit(unit);
@@ -63,13 +61,15 @@ public class LevelGrid : MonoBehaviour
 
     public void UnitMovedGridPosition(Unit unit, GridPosition fromGridPosition, GridPosition toGridPosition)
     {
-        RemoveUnitAtGridPosition(fromGridPosition,unit);
+        RemoveUnitAtGridPosition(fromGridPosition, unit);
         AddUnitAtGridPosition(toGridPosition, unit);
     }
-        
+
     public bool IsValidGridPosition(GridPosition gridPosition) => gridSystem.IsValidGridPosition(gridPosition);
 
     public bool HasUnitAtGridPosition(GridPosition gridPosition) => gridSystem.HasUnitAtGridPosition(gridPosition);
+
+    public Unit GetUnitAtGridPosition(GridPosition gridPosition) => gridSystem.GetUnitAtGridPosition(gridPosition);
 
     public int GetHeight() => gridSystem.GetHeight();
 

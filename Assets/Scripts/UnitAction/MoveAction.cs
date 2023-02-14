@@ -1,4 +1,5 @@
 using System;
+
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,6 +14,10 @@ public class MoveAction : BaseAction
     Vector3 targetPos;
     GridPosition unitGridPosition;
     int moveActionPoint = 1;
+
+    public event EventHandler OnStartMoving;
+    public event EventHandler OnStopMoving;
+
 
     protected override void Awake()
     {
@@ -42,7 +47,9 @@ public class MoveAction : BaseAction
         else
         {
             isActive = false;
-            unitAnimator.SetBool("IsWalking", false);
+
+            OnStopMoving?.Invoke(this, EventArgs.Empty);
+
             onActionComplete();
 
         }
@@ -54,7 +61,10 @@ public class MoveAction : BaseAction
     {
         isActive = true;
         onActionComplete = onMoveActionComplete;
+        //if targetPos is different from transform.position will trigger the Move();
         this.targetPos = LevelGrid.Instance.GetWorldPositionFromGridPos(gridPosition);
+        OnStartMoving?.Invoke(this, EventArgs.Empty);
+
 
 
     }

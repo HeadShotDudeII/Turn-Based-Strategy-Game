@@ -1,14 +1,12 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
-public class GridObject 
+public class GridObject
 {
     public GridPosition gridPosition;
     public GridSystem gridSystem;
     public List<Unit> unitList;
 
-    public GridObject(GridPosition gridPosition,GridSystem gridSystem)
+    public GridObject(GridPosition gridPosition, GridSystem gridSystem)
     {
         this.gridPosition = gridPosition;
         this.gridSystem = gridSystem;
@@ -18,13 +16,13 @@ public class GridObject
     public override string ToString()
     {
         string unitString = "";
-        foreach(Unit unit in unitList)
+        foreach (Unit unit in unitList)
         {
             unitString += unit + "!";
         }
 
-        
-        return gridPosition.ToString() + unitString; 
+
+        return gridPosition.ToString() + unitString;
 
     }
 
@@ -48,9 +46,19 @@ public class GridObject
         return unitList.Count > 0;
     }
 
-   
+    public Unit GetFirstUnit()
+    {
+        if (HasUnitAtGridPosition())
+        {
+            return unitList[0];
+        }
+        else
+            return null;
+    }
 
-    
+
+
+
 
 
 
