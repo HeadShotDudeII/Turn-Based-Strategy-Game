@@ -4,7 +4,7 @@ public class BulletProjectile : MonoBehaviour
 {
     Vector3 targetPos;
     [SerializeField] private TrailRenderer trailRenderer;
-
+    [SerializeField] private Transform bulletHitVFXPrefab;
     public void SetBullet(Vector3 targetPos)
     {
         this.targetPos = targetPos;
@@ -21,6 +21,7 @@ public class BulletProjectile : MonoBehaviour
         {
             trailRenderer.transform.parent = null;
             Destroy(gameObject);
+            Instantiate(bulletHitVFXPrefab, targetPos, Quaternion.identity);
         }
 
 

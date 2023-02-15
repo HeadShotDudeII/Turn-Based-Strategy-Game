@@ -2828,6 +2828,7 @@ GameObject:
   - component: {fileID: 7189175730842788029}
   - component: {fileID: -2899672337685060568}
   - component: {fileID: 5480025876875432614}
+  - component: {fileID: 2053264440163636513}
   m_Layer: 7
   m_Name: Unit
   m_TagString: Untagged
@@ -2936,6 +2937,18 @@ MonoBehaviour:
   bulletProjectilePrefab: {fileID: 2839081078793989240, guid: 6468aa256f06cde4da3ad6a4ef1a99cd,
     type: 3}
   shootPointTransform: {fileID: 846914056789980074}
+--- !u!114 &2053264440163636513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5341057854710532047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96cc3502487ba91418d118744f556b5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5800906428284300060
 GameObject:
   m_ObjectHideFlags: 0

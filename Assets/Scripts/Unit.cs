@@ -6,6 +6,7 @@ public class Unit : MonoBehaviour
 
 
     GridPosition gridPosition;
+    private HealthSystem healthSystem;
     MoveAction moveAction;
     SpinAction spinAction;
     BaseAction[] baseActionArray;
@@ -23,24 +24,32 @@ public class Unit : MonoBehaviour
     {
         //Debug.Log(targetPos); 
         // targetPos is initialized to 000 if unit is set to others it will update its position in update method.
-        moveAction = GetComponent<MoveAction>();
-        spinAction = GetComponent<SpinAction>();
+        healthSystem = GetComponent<HealthSystem>();
         baseActionArray = GetBaseActions();
         selectedBaseAction = GetDefaultAction();
         //so the unit will stay where it was set instead of going to 000
     }
 
-    public Vector3 GetWorldPosition()
-    {
-        return transform.position;
-    }
 
     private void Start()
     {
         gridPosition = LevelGrid.Instance.GetGridPositionFromWorldPos(transform.position);
         LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
         TurnSystem.Instance.OnTurnChanged += TurnSystem_OnTurnChanged;
+        healthSystem.onDead += HealthSystem_OnDead;
 
+    }
+
+
+    private void HealthSystem_OnDead(object sender, EventArgs e)
+    {
+        LevelGrid.Instance.RemoveUnitAtGridPosition(gridPosition, this);
+        Destroy(gameObject);
+    }
+
+    public Vector3 GetWorldPosition()
+    {
+        return transform.position;
     }
 
     // Update is called once per frame
@@ -63,9 +72,9 @@ public class Unit : MonoBehaviour
         }
     }
 
-    internal void Damage()
+    public void Damage(int damageAmount)
     {
-        Debug.Log(transform + " is damaged");
+        healthSystem.Damage(damageAmount);
     }
 
     public MoveAction GetMoveAction()

@@ -14,7 +14,7 @@ public class UnitSelectedVisual : MonoBehaviour
     void Awake()
     {
         meshRenderer = GetComponent<MeshRenderer>();
-    }
+    } 
     private void Start()
     {
         UnitActionSystem.Instance.OnSelectedUnitChanged += UnitActionSystem_OnSelectedUnitChanged; 
@@ -34,15 +34,22 @@ public class UnitSelectedVisual : MonoBehaviour
     {
         if (UnitActionSystem.Instance.GetSelectedUnit() == unit)
         {
+            //Debug.Log("the unit giving error is " + unit.ToString());
             meshRenderer.enabled = true;
         }
         else
+        {
+            //Debug.Log("the unit giving error is " + unit.ToString());
+
             meshRenderer.enabled = false;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDestroy()
     {
-        
+        UnitActionSystem.Instance.OnSelectedUnitChanged -= UnitActionSystem_OnSelectedUnitChanged;
+
     }
+
+
 }
