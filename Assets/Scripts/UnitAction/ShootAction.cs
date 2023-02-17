@@ -76,8 +76,7 @@ public class ShootAction : BaseAction
                 break;
             case State.Cooloff:
 
-                isActive = false;
-                onActionComplete();
+                ActionComplete();
                 break;
 
         }
@@ -139,8 +138,6 @@ public class ShootAction : BaseAction
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
-        isActive = true;
-        this.onActionComplete = onActionComplete;
 
         targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
 
@@ -148,7 +145,14 @@ public class ShootAction : BaseAction
         float aimingStateTime = .2f;
         stateTimer = aimingStateTime;
         canShootBullet = true;
+        ActionStart(onActionComplete);
 
+
+    }
+
+    public Unit GetTargetUnit()
+    {
+        return targetUnit;
     }
 
 

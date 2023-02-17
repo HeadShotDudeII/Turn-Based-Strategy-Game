@@ -1,23 +1,31 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HealthSystem : MonoBehaviour
 {
-    [SerializeField] private int health = 100;
+    [SerializeField] private int maxhealth = 100;
+    private int health;
 
-    public event EventHandler onDead;
+
+    public event EventHandler OnDead;
+    public event EventHandler OnDamage;
+
+
+    private void Awake()
+    {
+        health = maxhealth;
+    }
 
     public void Damage(int damageAmount)
     {
         health -= damageAmount;
+        OnDamage?.Invoke(this, EventArgs.Empty);
         if (health < 0)
         {
             health = 0;
         }
 
-        if(health == 0)
+        if (health == 0)
         {
             Die();
         }
@@ -25,10 +33,15 @@ public class HealthSystem : MonoBehaviour
 
     private void Die()
     {
-        
-        
-            onDead?.Invoke(this, EventArgs.Empty);
-        
 
+
+        OnDead?.Invoke(this, EventArgs.Empty);
+
+
+    }
+
+    public float GetHealthPercentage()
+    {
+        return health / (float)maxhealth;
     }
 }

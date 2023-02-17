@@ -36,7 +36,7 @@ public class Unit : MonoBehaviour
         gridPosition = LevelGrid.Instance.GetGridPositionFromWorldPos(transform.position);
         LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
         TurnSystem.Instance.OnTurnChanged += TurnSystem_OnTurnChanged;
-        healthSystem.onDead += HealthSystem_OnDead;
+        healthSystem.OnDead += HealthSystem_OnDead;
 
     }
 
@@ -152,4 +152,6 @@ public class Unit : MonoBehaviour
     {
         return isEnemy;
     }
+
+
 }
