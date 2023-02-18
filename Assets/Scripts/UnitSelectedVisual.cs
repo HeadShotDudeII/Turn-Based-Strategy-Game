@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UnitSelectedVisual : MonoBehaviour
@@ -14,10 +12,10 @@ public class UnitSelectedVisual : MonoBehaviour
     void Awake()
     {
         meshRenderer = GetComponent<MeshRenderer>();
-    } 
+    }
     private void Start()
     {
-        UnitActionSystem.Instance.OnSelectedUnitChanged += UnitActionSystem_OnSelectedUnitChanged; 
+        UnitActionSystem.Instance.OnSelectedUnitChanged += UnitActionSystem_OnSelectedUnitChanged;
         // subscribe to the event during start and event
         // the event will be triggered in update in UnitActionSystem
         UpdateVisual(); // for initialize to check if its selected before game start.

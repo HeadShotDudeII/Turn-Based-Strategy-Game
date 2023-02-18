@@ -72,6 +72,7 @@ public class MoveAction : BaseAction
     {
         List<GridPosition> validGridPositions = new List<GridPosition>();
         GridPosition unitGridPosition = unit.GetUnitGridPosition();
+        Debug.Log("Unit Grid Position is " + unitGridPosition.ToString());
         for (int x = -max_Move_Dis; x <= max_Move_Dis; x++)
         {
             for (int z = -max_Move_Dis; z <= max_Move_Dis; z++)
@@ -83,7 +84,7 @@ public class MoveAction : BaseAction
                 if (LevelGrid.Instance.HasUnitAtGridPosition(testGridPosition)) continue;
                 validGridPositions.Add(testGridPosition);
 
-                //Debug.Log("x is "+x +"z is "+z+"Valid grid is " + testGridPosition.ToString());
+                //Debug.Log("x is " + x + "z is " + z + "Valid grid is " + testGridPosition.ToString());
 
             }
         }

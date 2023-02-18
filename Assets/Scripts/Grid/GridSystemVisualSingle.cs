@@ -1,14 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GridSystemVisualSingle : MonoBehaviour
 {
     [SerializeField] MeshRenderer gridMesh;
 
-    public void ShowVisual()
+    public void ShowVisual(Material material)
     {
         gridMesh.enabled = true;
+        gridMesh.material = material;
 
     }
 
