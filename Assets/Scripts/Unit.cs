@@ -4,17 +4,24 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
 
+    public static event EventHandler OnAnyActionPointsChanged;
+    public static event EventHandler OnAnyUnitSpawned;
+    public static event EventHandler OnAnyUnitDead;
+
+    private int actionPoints = 3;
+    [SerializeField] bool isEnemy;
+
 
     GridPosition gridPosition;
     private HealthSystem healthSystem;
     MoveAction moveAction;
     SpinAction spinAction;
     BaseAction[] baseActionArray;
-    [SerializeField] int actionPoints = 3;
-    [SerializeField] bool isEnemy;
-    public const int MAX_DEFAULT_ACTION_POINTS = 3;
     BaseAction selectedBaseAction;
-    public static event EventHandler OnAnyActionPointsChanged;
+
+
+    [SerializeField] public const int MAX_DEFAULT_ACTION_POINTS = 4;
+
 
 
 
@@ -25,6 +32,7 @@ public class Unit : MonoBehaviour
         //Debug.Log(targetPos); 
         // targetPos is initialized to 000 if unit is set to others it will update its position in update method.
         healthSystem = GetComponent<HealthSystem>();
+        spinAction = GetComponent<SpinAction>();
         baseActionArray = GetBaseActions();
         selectedBaseAction = GetDefaultAction();
         //so the unit will stay where it was set instead of going to 000
@@ -36,6 +44,7 @@ public class Unit : MonoBehaviour
         gridPosition = LevelGrid.Instance.GetGridPositionFromWorldPos(transform.position);
         LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
         TurnSystem.Instance.OnTurnChanged += TurnSystem_OnTurnChanged;
+        OnAnyUnitSpawned?.Invoke(this, EventArgs.Empty);
 
         healthSystem.OnDead += HealthSystem_OnDead;
 
@@ -47,6 +56,7 @@ public class Unit : MonoBehaviour
     {
         LevelGrid.Instance.RemoveUnitAtGridPosition(gridPosition, this);
         Destroy(gameObject);
+        OnAnyUnitDead?.Invoke(this, EventArgs.Empty);
     }
 
     public Vector3 GetWorldPosition()
@@ -158,6 +168,12 @@ public class Unit : MonoBehaviour
     {
         return isEnemy;
     }
+
+    public GridPosition GetGridPosition()
+    {
+        return gridPosition;
+    }
+
 
 
 }

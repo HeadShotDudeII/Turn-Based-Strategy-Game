@@ -79,14 +79,7 @@ public class GridSystemVisual : MonoBehaviour
         }
     }
 
-    public void ShowGridVisualGridPositionList(List<GridPosition> gridPositions, GridVisualType gridVisualType)
-    {
-        foreach (GridPosition gridPosition in gridPositions)
-        {
-            gridSystemVisualSingleArray[gridPosition.x, gridPosition.z].ShowVisual(GetGridVisualTypeMaterial(gridVisualType));
-        }
 
-    }
 
     public void UpdateGridVisual()
     {
@@ -103,12 +96,47 @@ public class GridSystemVisual : MonoBehaviour
                 break;
             case ShootAction shootAction:
                 gridVisualType = GridVisualType.Red;
+                ShowShootActionRange(UnitActionSystem.Instance.GetSelectedUnit().GetGridPosition(), shootAction.GetShootRange(), GridVisualType.RedSoft);
                 break;
 
         }
         ShowGridVisualGridPositionList(selectedAction.GetValidGridPositionsList(), gridVisualType);
 
     }
+
+
+    public void ShowShootActionRange(GridPosition gridPosition, int range, GridVisualType gridVisualType)
+    {
+        List<GridPosition> validGridPositions = new List<GridPosition>();
+        for (int x = -range; x <= range; x++)
+        {
+            for (int z = -range; z <= range; z++)
+            {
+                GridPosition offsetGridPosition = new GridPosition(x, z);
+                GridPosition testGridPosition = offsetGridPosition + gridPosition;
+                if (testGridPosition == gridPosition) continue;
+                if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition)) continue;
+                int testDistance = Mathf.Abs(x) + Mathf.Abs(z);
+                if (testDistance > range) continue;
+                validGridPositions.Add(testGridPosition);
+
+            }
+        }
+
+        ShowGridVisualGridPositionList(validGridPositions, gridVisualType);
+    }
+
+
+
+    public void ShowGridVisualGridPositionList(List<GridPosition> gridPositions, GridVisualType gridVisualType)
+    {
+        foreach (GridPosition gridPosition in gridPositions)
+        {
+            gridSystemVisualSingleArray[gridPosition.x, gridPosition.z].ShowVisual(GetGridVisualTypeMaterial(gridVisualType));
+        }
+
+    }
+
 
     private void UnitActionSystem_OnSelectedActionChanged(object sender, EventArgs e)
     {

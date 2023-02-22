@@ -72,7 +72,6 @@ public class MoveAction : BaseAction
     {
         List<GridPosition> validGridPositions = new List<GridPosition>();
         GridPosition unitGridPosition = unit.GetUnitGridPosition();
-        Debug.Log("Unit Grid Position is " + unitGridPosition.ToString());
         for (int x = -max_Move_Dis; x <= max_Move_Dis; x++)
         {
             for (int z = -max_Move_Dis; z <= max_Move_Dis; z++)

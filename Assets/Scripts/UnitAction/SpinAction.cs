@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpinAction : BaseAction
 {
     float totalSpinAmount;
-    int spinActionPoint = 2;
+    [SerializeField] int spinActionPoint = 2;
 
     // Update is called once per frame
     void Update()
@@ -29,6 +29,7 @@ public class SpinAction : BaseAction
         Vector3 spinAmoutEngle = new Vector3(0, spinAmount, 0);
         transform.eulerAngles += spinAmoutEngle;
         totalSpinAmount += spinAmount;
+        Debug.Log("Spinning " + totalSpinAmount);
         if (totalSpinAmount >= 360f)
         {
             ActionComplete();
@@ -44,7 +45,7 @@ public class SpinAction : BaseAction
 
     public override List<GridPosition> GetValidGridPositionsList()
     {
-        return new List<GridPosition> { UnitActionSystem.Instance.GetSelectedUnit().GetUnitGridPosition() };
+        return new List<GridPosition> { unit.GetUnitGridPosition() };
     }
 
     public override int GetActionPoints()

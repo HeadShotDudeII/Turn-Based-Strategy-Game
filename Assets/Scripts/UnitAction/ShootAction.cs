@@ -156,7 +156,10 @@ public class ShootAction : BaseAction
     }
 
 
-
+    public int GetShootRange()
+    {
+        return max_Shoot_Dis;
+    }
 
 
 
