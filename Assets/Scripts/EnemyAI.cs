@@ -1,4 +1,5 @@
 using System;
+
 using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
@@ -95,25 +96,10 @@ public class EnemyAI : MonoBehaviour
 
     private bool TryTakeEnemyAIAction(Unit enemyUnit, Action onEnemyAIActionComplete)
     {
-        SpinAction spinAction = enemyUnit.GetSpinAction();
-
-        GridPosition actionGridPosition = enemyUnit.GetGridPosition();
-
-        if (!spinAction.IsValidGridPosition(actionGridPosition))
+        EnemyActionValue bestEnemyActionValue;
+        foreach (BaseAction baseAction in enemyUnit.GetBaseActions())
         {
-            Debug.Log("IsValidGridPosition");
-            return false;
         }
-
-        if (!enemyUnit.TryTakeActionAndSpendActionPoints(spinAction))
-        {
-            Debug.Log("TryTakeActionAndSpendActionPoints");
-            return false;
-        }
-
-
-        spinAction.TakeAction(actionGridPosition, onEnemyAIActionComplete);
-        Debug.Log("Spin Action! Enemy State is " + state);
         return true;
     }
 

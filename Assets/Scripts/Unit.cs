@@ -16,6 +16,7 @@ public class Unit : MonoBehaviour
     private HealthSystem healthSystem;
     MoveAction moveAction;
     SpinAction spinAction;
+    ShootAction shootAction;
     BaseAction[] baseActionArray;
     BaseAction selectedBaseAction;
 
@@ -33,6 +34,7 @@ public class Unit : MonoBehaviour
         // targetPos is initialized to 000 if unit is set to others it will update its position in update method.
         healthSystem = GetComponent<HealthSystem>();
         spinAction = GetComponent<SpinAction>();
+        shootAction = GetComponent<ShootAction>();
         baseActionArray = GetBaseActions();
         selectedBaseAction = GetDefaultAction();
         //so the unit will stay where it was set instead of going to 000
@@ -103,6 +105,11 @@ public class Unit : MonoBehaviour
         return spinAction;
     }
 
+    public ShootAction GetShootAction()
+    {
+        return shootAction;
+    }
+
     public GridPosition GetUnitGridPosition()
     {
         return gridPosition;
@@ -118,7 +125,7 @@ public class Unit : MonoBehaviour
         return baseActionArray[0];
     }
 
-    public bool TryTakeActionAndSpendActionPoints(BaseAction baseAction)
+    public bool TrySpendActionPoints(BaseAction baseAction)
     {
         if (actionPoints < baseAction.GetActionPoints())
             return false;
@@ -174,6 +181,10 @@ public class Unit : MonoBehaviour
         return gridPosition;
     }
 
+    public float GetNormalizedHealthValue()
+    {
+        return healthSystem.GetHealthPercentage();
+    }
 
 
 }

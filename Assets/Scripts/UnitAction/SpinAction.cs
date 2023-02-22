@@ -53,4 +53,14 @@ public class SpinAction : BaseAction
         return spinActionPoint;
     }
 
+    public override EnemyActionValue GenerateEnemyActionValue(GridPosition gridPosition)
+    {
+        return new EnemyActionValue
+        {
+            gridPosition = gridPosition,
+            actionValue = 5,
+        };
+
+    }
+
 }

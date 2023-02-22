@@ -55,4 +55,27 @@ public abstract class BaseAction : MonoBehaviour
     {
         return unit;
     }
+
+    public EnemyActionValue GetBestEnemyActionValue()
+    {
+        List<GridPosition> validGridPositions = GetValidGridPositionsList();
+        List<EnemyActionValue> enemyActionValues = new List<EnemyActionValue>();
+
+        foreach (GridPosition gridPosition in validGridPositions)
+        {
+            EnemyActionValue enemyActionValue = GenerateEnemyActionValue(gridPosition);
+            enemyActionValues.Add(enemyActionValue);
+        }
+
+        if (enemyActionValues != null)
+        {
+            enemyActionValues.Sort((EnemyActionValue a, EnemyActionValue b) => b.actionValue - a.actionValue);
+            return enemyActionValues[0];
+        }
+        else return null;
+    }
+
+    public abstract EnemyActionValue GenerateEnemyActionValue(GridPosition gridPosition);
+
+
 }
