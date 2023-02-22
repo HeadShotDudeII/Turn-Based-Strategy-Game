@@ -10,7 +10,7 @@ public abstract class BaseAction : MonoBehaviour
     public static event EventHandler OnAnyActionCompleted;
 
     protected bool isActive; // true on, false off
-    int defaultActionPoint = 1;
+   // int defaultActionPoint = 1;
     // Start is called before the first frame update
     protected virtual void Awake()
     {
@@ -30,10 +30,8 @@ public abstract class BaseAction : MonoBehaviour
 
     public abstract string GetActionName();
 
-    public virtual int GetActionPoints()
-    {
-        return defaultActionPoint;
-    }
+    public abstract int GetActionPointsCost();
+    
 
     protected void ActionStart(Action onActionComplete)
     {
@@ -67,7 +65,7 @@ public abstract class BaseAction : MonoBehaviour
             enemyActionValues.Add(enemyActionValue);
         }
 
-        if (enemyActionValues != null)
+        if (enemyActionValues.Count>0)
         {
             enemyActionValues.Sort((EnemyActionValue a, EnemyActionValue b) => b.actionValue - a.actionValue);
             return enemyActionValues[0];

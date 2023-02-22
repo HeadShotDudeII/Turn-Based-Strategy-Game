@@ -8,7 +8,7 @@ public class Unit : MonoBehaviour
     public static event EventHandler OnAnyUnitSpawned;
     public static event EventHandler OnAnyUnitDead;
 
-    private int actionPoints = 3;
+    private int actionPoints = 4;
     [SerializeField] bool isEnemy;
 
 
@@ -125,13 +125,27 @@ public class Unit : MonoBehaviour
         return baseActionArray[0];
     }
 
+    public bool CanSpendActionPoints(BaseAction baseAction)
+    {
+        if (actionPoints >= baseAction.GetActionPointsCost())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+
+    }
+
     public bool TrySpendActionPoints(BaseAction baseAction)
     {
-        if (actionPoints < baseAction.GetActionPoints())
+        if (actionPoints < baseAction.GetActionPointsCost())
             return false;
         else
         {
-            actionPoints -= baseAction.GetActionPoints();
+            actionPoints -= baseAction.GetActionPointsCost();
             OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
             return true;
         }

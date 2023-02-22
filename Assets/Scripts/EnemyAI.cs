@@ -82,7 +82,7 @@ public class EnemyAI : MonoBehaviour
 
     private bool TryTakeEnemyAIAction(Action onEnemyAIActionComplete)
     {
-        Debug.Log("Take Enemy AI Action");
+        
         foreach (Unit enemyUnit in UnitManager.Instance.GetEnemyUnitList())
         {
             if (TryTakeEnemyAIAction(enemyUnit, onEnemyAIActionComplete))
@@ -96,11 +96,44 @@ public class EnemyAI : MonoBehaviour
 
     private bool TryTakeEnemyAIAction(Unit enemyUnit, Action onEnemyAIActionComplete)
     {
-        EnemyActionValue bestEnemyActionValue;
+        EnemyActionValue bestEnemyActionValue = null;
+        BaseAction bestBaseAction = null;
         foreach (BaseAction baseAction in enemyUnit.GetBaseActions())
         {
+            if (!enemyUnit.CanSpendActionPoints(baseAction)) continue;
+            if(bestEnemyActionValue == null)
+            {
+                bestEnemyActionValue = baseAction.GetBestEnemyActionValue();
+                bestBaseAction = baseAction;
+            }
+            else
+            {
+                EnemyActionValue testEnemyActionValue = baseAction.GetBestEnemyActionValue();
+                if(testEnemyActionValue!=null && testEnemyActionValue.actionValue > bestEnemyActionValue.actionValue)
+                {
+                    bestEnemyActionValue = testEnemyActionValue;
+                    bestBaseAction = baseAction;
+                }
+
+            }
         }
-        return true;
+
+
+
+        if (bestEnemyActionValue != null && enemyUnit.TrySpendActionPoints(bestBaseAction))
+        {
+            bestBaseAction.TakeAction(bestEnemyActionValue.gridPosition, onEnemyAIActionComplete);
+            return true;
+        }
+        else {
+
+
+
+            return false;
+
+        }
+
+
     }
 
 

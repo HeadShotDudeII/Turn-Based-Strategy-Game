@@ -11,6 +11,7 @@ public class ShootAction : BaseAction
     private Unit targetUnit;
     bool canShootBullet;
     public event EventHandler<OnShootEventArgs> OnShoot;
+    [SerializeField] int shootActionPointCost = 1;
     public class OnShootEventArgs : EventArgs
     {
         public Unit targetUnit;
@@ -173,6 +174,11 @@ public class ShootAction : BaseAction
         return GetValidGridPositionsList(gridPosition).Count;
     }
 
+    public override int GetActionPointsCost()
+    {
+        return shootActionPointCost;
+    }
+
     public override EnemyActionValue GenerateEnemyActionValue(GridPosition gridPosition)
     {
         Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
@@ -187,4 +193,4 @@ public class ShootAction : BaseAction
 
 
 
-}
+

@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpinAction : BaseAction
 {
     float totalSpinAmount;
-    [SerializeField] int spinActionPoint = 2;
+    [SerializeField] int spinActionPoint = 1;
 
     // Update is called once per frame
     void Update()
@@ -48,7 +48,7 @@ public class SpinAction : BaseAction
         return new List<GridPosition> { unit.GetUnitGridPosition() };
     }
 
-    public override int GetActionPoints()
+    public override int GetActionPointsCost()
     {
         return spinActionPoint;
     }

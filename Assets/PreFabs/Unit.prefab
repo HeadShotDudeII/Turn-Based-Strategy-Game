@@ -2997,7 +2997,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c17c1ad16b117c5409e35b423aa2feb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionPoints: 3
   isEnemy: 0
 --- !u!65 &2016830269358254408
 BoxCollider:
@@ -3040,6 +3039,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b06af42d16e87241a09b4616087440a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spinActionPoint: 1
 --- !u!114 &-2899672337685060568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3053,6 +3053,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   max_Shoot_Dis: 7
+  shootActionPointCost: 1
 --- !u!114 &5480025876875432614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3468,7 +3469,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 7
+  m_text: 00
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

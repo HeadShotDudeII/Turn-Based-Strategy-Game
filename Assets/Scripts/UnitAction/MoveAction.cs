@@ -9,11 +9,12 @@ public class MoveAction : BaseAction
     float smallDis = 0.1f;
     [SerializeField] private float moveSpeed = 1.5f;
     [SerializeField] private float rotateSpeed = 10f;
-    [SerializeField] int max_Move_Dis = 1;
+    [SerializeField] int max_Move_Dis = 3;
+    [SerializeField] int moveActionPointCost = 1;
+
 
     Vector3 targetPos;
     GridPosition unitGridPosition;
-    int moveActionPoint = 1;
 
     public event EventHandler OnStartMoving;
     public event EventHandler OnStopMoving;
@@ -99,9 +100,9 @@ public class MoveAction : BaseAction
         return "Move";
     }
 
-    public override int GetActionPoints()
+    public override int GetActionPointsCost()
     {
-        return moveActionPoint;
+        return moveActionPointCost;
     }
 
     public override EnemyActionValue GenerateEnemyActionValue(GridPosition gridPosition)
